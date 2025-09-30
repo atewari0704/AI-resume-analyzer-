@@ -5,10 +5,13 @@ import { usePuterStore } from "~/lib/puter";
 import { convertPdfToImage } from "~/lib/pdf2img";
 import { generateUUID } from "~/lib/utils";
 import { prepareInstructions } from "../../constants";
+import { useNavigate } from "react-router";
+
 
 
 
 const Upload = () => {
+    const navigate = useNavigate();
 
     const { auth, isLoading, fs, ai, kv } = usePuterStore();
 
@@ -69,8 +72,8 @@ const Upload = () => {
         data.feedback = JSON.parse(feedbackText);
         await kv.set(`resume:${uuid}`, JSON.stringify(data));
         setStatusText('Analysis complete, redirecting...');
-        console.log(data);
 
+        navigate(`/resume/${uuid}`);
     }
 
 
